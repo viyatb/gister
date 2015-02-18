@@ -1,15 +1,6 @@
 package gist
 
-import (
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"net/http"
-	"os"
-	"strings"
-)
-
-const VERSION = "__0.10__"
+const VERSION = "v0.1.0"
 
 //clipboard commands
 const (
@@ -27,7 +18,7 @@ const (
 )
 
 var (
-	GITHUB_BASE_PATH = ""
-	URL_ENV_NAME     = "GITHUB URL"
+	GITHUB_BASE_PATH string
+	URL_ENV_NAME     string
 	USER_AGENT       = "gist/#" + VERSION //Github requires this, else rejects API request
 )
