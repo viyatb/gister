@@ -16,7 +16,7 @@ import (
 
 const VERSION = "v0.1.0"
 
-//clipboard commands
+//A list of clipboard commands with copy and paste support.
 const (
 	xclip   = "xclip -o"
 	xsel    = "xsel -o"
@@ -39,6 +39,7 @@ var (
 var (
 	publicFlag  bool
 	description string
+	anonymous   bool
 	responseObj map[string]interface{}
 )
 
@@ -52,14 +53,25 @@ type Gist struct {
 	GistFile    map[string]GistFile `json:"files"`
 }
 
+func loadTokenFromFile() (token string) {
+	//get the tokenfile
+	file := os.Getenv("$HOME") + "/.gist"
+	github_token, err := ioutil.ReadFile(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(github_token)
+}
+
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: gist [-p] [-d] example.go\n")
+	fmt.Fprintf(os.Stderr, "usage: gist [-p] [-d] [-u] example.go\n")
 	flag.PrintDefaults()
 	os.Exit(2)
 }
 
 func main() {
 	flag.BoolVar(&publicFlag, "p", true, "Set to false for private gist.")
+	flag.BoolVar(&anonymous, "u", true, "Set false if gist should be not anonymous")
 	flag.StringVar(&description, "d", "This is a gist", "Description for gist.")
 	flag.Usage = usage
 	flag.Parse()
@@ -69,7 +81,8 @@ func main() {
 		log.Fatal("Error: No files specified.")
 	}
 
-	fmt.Println(files_list)
+	//fmt.Println(files_list)
+	//fmt.Println(token)
 
 	files := map[string]GistFile{}
 
@@ -100,9 +113,9 @@ func main() {
 	fmt.Println("OK")
 
 	b := bytes.NewBuffer(pfile)
-	fmt.Println("uploading...")
+	fmt.Println("Uploading...")
 
-	if publicFlag {
+	if anonymous == true {
 		response, err := http.Post("https://api.github.com/gists", "application/json", b)
 		if err != nil {
 			log.Fatal("HTTP error: ", err)
@@ -119,14 +132,13 @@ func main() {
 		req, err := http.NewRequest("POST", "https://api.github.com/gists", b)
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("Accept", "application/json")
-		req.Header.Set("X-Auth-Token", token)
+		req.SetBasicAuth(token, "x-oauth-basic")
 
-		client := &http.Client{}
+		client := http.Client{}
 		response, err := client.Do(req)
 		if err != nil {
 			log.Fatal("HTTP error: ", err)
 		}
-		defer response.Body.Close()
 		err = json.NewDecoder(response.Body).Decode(&responseObj)
 		if err != nil {
 			log.Fatal("Response JSON error: ", err)
