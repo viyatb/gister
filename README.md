@@ -11,9 +11,9 @@ a commandline gister in golang
 1. Get the pre-built Linux (x86_64) built or download and build it yourself.
 
 `gister` provides 3 optional CLI arguments.
-    - `-p`: If `true`, the gist created will be public. Defaults to `true`.
-    - `-d`: Provide a description. Defaults to `This is a gist`.
-    - `-u`: If `true`, the gist created will be anonymous. Defaults to `true`.
+  - `-p`: If `true`, the gist created will be public. Defaults to `true`.
+  - `-d`: Provide a description. Defaults to `This is a gist`.
+  - `-u`: If `true`, the gist created will be anonymous. Defaults to `true`.
 
 Running `gister --h` gives you the following output,
 
