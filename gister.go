@@ -140,37 +140,26 @@ func main() {
 	b := bytes.NewBuffer(pfile)
 	fmt.Println("Uploading...")
 
-	//Separate uploading methods depending on whether the gist is anonymous or not
-	if anonymous == true {
-		response, err := http.Post("https://api.github.com/gists", "application/json", b)
-		if err != nil {
-			log.Fatal("HTTP error: ", err)
-		}
+	// Send request to API
 
-		err = json.NewDecoder(response.Body).Decode(&responseObj)
-		if err != nil {
-			log.Fatal("Response JSON error: ", err)
-		}
+	req, err := http.NewRequest("POST", "https://api.github.com/gists", b)
 
-		fmt.Println("--- Gist URL ---")
-		fmt.Println(responseObj["html_url"])
-	} else {
-		req, err := http.NewRequest("POST", "https://api.github.com/gists", b)
+	if !anonymous {
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("Accept", "application/json")
 		req.SetBasicAuth(token, "x-oauth-basic")
-
-		client := http.Client{}
-		response, err := client.Do(req)
-		if err != nil {
-			log.Fatal("HTTP error: ", err)
-		}
-		err = json.NewDecoder(response.Body).Decode(&responseObj)
-		if err != nil {
-			log.Fatal("Response JSON error: ", err)
-		}
-
-		fmt.Println("--- Gist URL ---")
-		fmt.Println(responseObj["html_url"])
 	}
+
+	client := http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		log.Fatal("HTTP error: ", err)
+	}
+	err = json.NewDecoder(response.Body).Decode(&responseObj)
+	if err != nil {
+		log.Fatal("Response JSON error: ", err)
+	}
+
+	fmt.Println("--- Gist URL ---")
+	fmt.Println(responseObj["html_url"])
 }
