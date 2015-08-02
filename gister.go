@@ -3,7 +3,7 @@
 // You can also create secret gists, and both anonymous and user gists.
 //
 // Author: Viyat Bhalodia
-package main
+package gister
 
 import (
 	"bytes"
