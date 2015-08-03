@@ -27,5 +27,5 @@ Running `gister --h` gives you the following output,
 
 ## LICENSE
 
-MIT: http://rem.mit-license.org
+MIT: http://mit-license.org
 
