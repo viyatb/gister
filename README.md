@@ -17,7 +17,7 @@ a commandline gister in golang
 
 Running `gister --h` gives you the following output,
 
-![](http://i.imgur.com/0sUQiQe.png)
+![](http://i.imgur.com/tu3fFop.png)
 
 
 ## TODO:
