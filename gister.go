@@ -80,7 +80,7 @@ func loadTokenFromFile() (token string) {
 
 //Defines basic usage when program is run with the help flag
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: gist [-p] [-d] [-u] example.go\n")
+	fmt.Fprintf(os.Stderr, "usage: gist [-p] [-d] [-a] example\n")
 	flag.PrintDefaults()
 	os.Exit(2)
 }
@@ -94,7 +94,7 @@ func usage() {
 //The response recieved is parsed and the Gist URL is printed to STDOUT.
 func main() {
 	flag.BoolVar(&publicFlag, "p", true, "Set to false for private gist.")
-	flag.BoolVar(&anonymous, "u", true, "Set false if gist should be not anonymous")
+	flag.BoolVar(&anonymous, "a", true, "Set false if you want the gist for a user")
 	flag.StringVar(&description, "d", "This is a gist", "Description for gist.")
 	flag.Usage = usage
 	flag.Parse()
