@@ -18,7 +18,7 @@ import (
 )
 
 //Defines the app version
-const VERSION = "v0.1.0"
+const VERSION = "v0.3.0"
 
 //#TODO: A list of clipboard commands with copy and paste support.
 //This is intended for adding the gist URLs directly to the user clipboard,
@@ -35,8 +35,7 @@ const (
 // API v3 is the current version of GitHub API
 const (
 	GITHUB_API_URL = "https://api.github.com/"
-	GIT_IO_URL     = "http://git.io"
-	GHE_BASE_PATH  = "/api/v3"
+	BASE_PATH      = "/api/v3"
 )
 
 //User agent defines a custom agent (required by GitHub)
@@ -54,12 +53,12 @@ var (
 	responseObj map[string]interface{}
 )
 
-//The top-level struct for a gist file
+// The top-level struct for a gist file
 type GistFile struct {
 	Content string `json:"content"`
 }
 
-//The required structure for POST data for API purposes
+// The required structure for POST data for API purposes
 type Gist struct {
 	Description string              `json:"description"`
 	publicFile  bool                `json:"public"`
@@ -78,20 +77,20 @@ func loadTokenFromFile() (token string) {
 	return string(github_token)
 }
 
-//Defines basic usage when program is run with the help flag
+// Defines basic usage when program is run with the help flag
 func usage() {
 	fmt.Fprintf(os.Stderr, "usage: gist [-p] [-d] [-a] example\n")
 	flag.PrintDefaults()
 	os.Exit(2)
 }
 
-//The main function parses the CLI args. It also checks the files, and
-//loads them into an array.
-//Then the files are separated into GistFile structs and collectively
-//the files are saved in `files` field in the Gist struct.
-//A request is then made to the GitHub api - it depends on whether it is
-//anonymous gist or not.
-//The response recieved is parsed and the Gist URL is printed to STDOUT.
+// The main function parses the CLI args. It also checks the files, and
+// loads them into an array.
+// Then the files are separated into GistFile structs and collectively
+// the files are saved in `files` field in the Gist struct.
+// A request is then made to the GitHub api - it depends on whether it is
+// anonymous gist or not.
+// The response recieved is parsed and the Gist URL is printed to STDOUT.
 func main() {
 	flag.BoolVar(&publicFlag, "p", true, "Set to false for private gist.")
 	flag.BoolVar(&anonymous, "a", true, "Set false if you want the gist for a user")
@@ -103,9 +102,6 @@ func main() {
 	if len(files_list) == 0 {
 		log.Fatal("Error: No files specified.")
 	}
-
-	//fmt.Println(files_list)
-	//fmt.Println(token)
 
 	files := map[string]GistFile{}
 
@@ -160,6 +156,6 @@ func main() {
 		log.Fatal("Response JSON error: ", err)
 	}
 
-	fmt.Println("--- Gist URL ---")
+	fmt.Println("===Gist URL===")
 	fmt.Println(responseObj["html_url"])
 }
