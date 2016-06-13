@@ -14,6 +14,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -69,12 +70,12 @@ type Gist struct {
 //from the user's home directory.
 func loadTokenFromFile() (token string) {
 	//get the tokenfile
-	file := os.Getenv("$HOME") + "/.gist"
+	file := filepath.Join(os.Getenv("HOME"), ".gist")
 	github_token, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return string(github_token)
+	return strings.TrimSpace(string(github_token))
 }
 
 // Defines basic usage when program is run with the help flag
@@ -141,6 +142,9 @@ func main() {
 	req, err := http.NewRequest("POST", "https://api.github.com/gists", b)
 
 	if !anonymous {
+		if token == "" {
+			token = loadTokenFromFile()
+		}
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("Accept", "application/json")
 		req.SetBasicAuth(token, "x-oauth-basic")
