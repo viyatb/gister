@@ -61,7 +61,7 @@ type GistFile struct {
 // The required structure for POST data for API purposes
 type Gist struct {
 	Description string              `json:"description"`
-	publicFile  bool                `json:"public"`
+	PublicFile  bool                `json:"public"`
 	GistFile    map[string]GistFile `json:"files"`
 }
 
