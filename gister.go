@@ -75,7 +75,7 @@ func loadTokenFromFile() (token string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return string(github_token)
+	return strings.TrimSpace(string(github_token))
 }
 
 // Defines basic usage when program is run with the help flag
