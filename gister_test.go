@@ -1,16 +1,4 @@
-package gister
-
-import (
-	"bytes"
-	"encoding/json"
-	"flag"
-	"fmt"
-	"io/ioutil"
-	"log"
-	"net/http"
-	"os"
-	"strings"
-)
+package main
 
 func Test_main() {
 
