@@ -1,7 +1,7 @@
 a commandline gister in golang
 ---
-[![GoDoc](https://godoc.org/github.com/delta24/gister?status.svg)](https://godoc.org/github.com/delta24/gister)
-![](https://img.shields.io/github/issues/delta24/gister.svg)
+[![GoDoc](https://godoc.org/github.com/viyatb/gister?status.svg)](https://godoc.org/github.com/viyatb/gister)
+![](https://img.shields.io/github/issues/viyatb/gister.svg)
 
 
 > This is a port of [gist](https://github.com/defunkt/gist) in Go
@@ -15,17 +15,9 @@ a commandline gister in golang
   - `-d`: Provide a description. Defaults to `This is a gist`.
   - `-a`: If `true`, the gist created will be anonymous. Set `false` to create a gist for a user. Defaults to `true`.
 
-Running `gister --h` gives you the following output,
+2. Running `gister --h` for the available options and usage.
 
-![](http://i.imgur.com/tu3fFop.png)
-
-
-## TODO:
-
-- [ ] screencast
-- [ ] tests
 
 ## LICENSE
 
-MIT: http://mit-license.org
-
+[MIT](LICENSE.md)
