@@ -43,6 +43,7 @@ const (
 
 //User agent defines a custom agent (required by GitHub)
 //`token` stores the GITHUB_TOKEN from the env variables
+// GITHUB_TOKEN must be in format of `username:token`
 var (
 	USER_AGENT = "gist/" + VERSION
 	token      = os.Getenv("GITHUB_TOKEN")
@@ -154,6 +155,9 @@ func main() {
 		post_to += "/" + update
 	}
 	req, err := http.NewRequest("POST", post_to, b)
+	if err != nil {
+		log.Fatal("Cannot create request: ", err)
+	}
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
@@ -161,7 +165,11 @@ func main() {
 		if token == "" {
 			token = loadTokenFromFile()
 		}
-		req.SetBasicAuth(token, "x-oauth-basic")
+		words := strings.Split(token, ":")
+		if len(words) != 2 {
+			log.Fatalf("token must be in form `username:token`, was actually %s", token)
+		}
+		req.SetBasicAuth(words[0], words[1])
 	}
 
 	client := http.Client{}
