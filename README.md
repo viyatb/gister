@@ -11,7 +11,7 @@ a commandline gister in golang
 1. [Create a personal access token] https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
 
 2. Set the `GITHUB_TOKEN` environment variable to the value `username:token`,
-   or write `usernmae:token` to `~/.gist` file.
+   or write `username:token` to `~/.gist` file.
 
 ## Usage
 
@@ -22,7 +22,7 @@ a commandline gister in golang
   - `-d`: Provide a description. Defaults to `This is a gist`.
   - `-anonymous`: If `true`, the gist created will be anonymous. Set `false` to create a gist for a user. Defaults to `true`.
 
-2. Running `gister --h` for the available options and usage.
+2. Run `gister --h` for the available options and usage.
 
 
 ## LICENSE
