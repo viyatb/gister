@@ -46,6 +46,7 @@ const (
 // GITHUB_TOKEN must be in format of `username:token`
 var (
 	USER_AGENT = "gist/" + VERSION
+	username   = os.Getenv("GITHUB_USERNAME")
 	token      = os.Getenv("GITHUB_TOKEN")
 )
 
@@ -167,7 +168,10 @@ func main() {
 		}
 		words := strings.Split(token, ":")
 		if len(words) != 2 {
-			log.Fatalf("token must be in form `username:token`, was actually %s", token)
+			if username == "" {
+				log.Fatalf("token must be in form `username:token`, was actually %s", token)
+			}
+			words = []string{username, token}
 		}
 		req.SetBasicAuth(words[0], words[1])
 	}
